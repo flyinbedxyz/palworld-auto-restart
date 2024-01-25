@@ -2,7 +2,7 @@
 #filename auto_backup_reboot_palserver.sh
 
 # 设置最大内存占用百分比
-PID_MEM_MAX="90"
+PID_MEM_MAX="95"
 
 # 设置最大系统负载
 SYS_LOAD_MAX="3"
@@ -18,7 +18,11 @@ do
 
     # 获取该程序总进程数
     PID_NUM_SUM=`ps aux | grep $NAME | wc -l`
-
+    
+    #检查服务端是否正在运行
+    if [ $PID_NUM_SUM -eq 1 ] ;then
+	    bash /home/ubuntu/Steam/steamapps/common/PalServer/PalServer.sh &
+    fi
     # 列出每个进程内存占用百分比
     PID_MEM_LIST=`ps aux | grep $NAME | awk '{print $4}'`
 
